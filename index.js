@@ -50,7 +50,7 @@ function startBot() {
         sendWebhookMessage(`Error logging in to account ${username}`);
       }
       user.setPersona(1); // Online status
-      user.gamesPlayed(["🔥Smurfing"]);
+      user.gamesPlayed(["🔥"]);
      
     });
   });

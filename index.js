@@ -49,8 +49,8 @@ function startBot() {
         console.log(`Error logging in to account ${username}`);
         sendWebhookMessage(`Error logging in to account ${username}`);
       }
-      user.setPersona(1); // Online status
-      user.gamesPlayed([730, " 🔥"]);
+      user.setPersona(7); // Online status
+      user.gamesPlayed(games);
 
      
     });

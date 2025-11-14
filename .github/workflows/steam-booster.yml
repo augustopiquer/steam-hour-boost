@@ -27,7 +27,7 @@ jobs:
         # Pasamos la lista de juegos como una variable de entorno de shell directamente, 
         # junto con la ejecución del script. Esto es más robusto que la sintaxis 'env:'.
         run: |
-          GAMES='440,570,1677740,578080,1172470,730,1422450' node index.js
+          GAMES='730' node index.js
         env:
           # Dejamos ACCOUNTS en el bloque env: ya que generalmente no da problemas.
           ACCOUNTS: ${{ secrets.STEAM_ACCOUNTS }}

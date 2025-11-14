@@ -2,9 +2,9 @@ name: Steam Hour Booster - Ejecución Programada
 
 on:
   schedule:
-    # Se ejecuta CADA 6 HORAS. Esto es suficiente para el boost.
+    # Se ejecuta CADA 6 HORAS.
     - cron: '0 */6 * * *' 
-  workflow_dispatch: # Permite ejecución manual
+  workflow_dispatch:
 
 jobs:
   boost_hours:
@@ -23,11 +23,7 @@ jobs:
         run: npm install
 
       - name: 4. Ejecutar el Steam Booster (node index.js)
-        # ⚠️ SOLUCIÓN FINAL para el error de 'undefined':
-        # Pasamos la lista de juegos como una variable de entorno de shell directamente, 
-        # junto con la ejecución del script. Esto es más robusto que la sintaxis 'env:'.
+        # ⚠️ SOLUCIÓN: Pasamos la clave 'GAMES' y la clave 'ACCOUNTS' directamente al comando 'run'
+        # Esto obliga al shell a crear las variables de entorno antes de ejecutar el script.
         run: |
-          GAMES='730' node index.js
-        env:
-          # Dejamos ACCOUNTS en el bloque env: ya que generalmente no da problemas.
-          ACCOUNTS: ${{ secrets.STEAM_ACCOUNTS }}
+          GAMES='730' ACCOUNTS='${{ secrets.STEAM_ACCOUNTS }}' node index.js

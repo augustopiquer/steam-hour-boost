@@ -30,4 +30,4 @@ jobs:
         env:
           # Estas variables usan los Secretos que crearemos en el siguiente paso
           ACCOUNTS: ${{ secrets.STEAM_ACCOUNTS }}
-          GAMES: ${{ secrets.STEAM_GAMES }}
+          GAMES: 730, 10, 550, 1240440, 1824220, 570, 671860, 240, 620, 578080, 1260320, 1172470, 1422450, 238960, 3241660, 1085660, 2807960

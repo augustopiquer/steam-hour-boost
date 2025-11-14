@@ -2,10 +2,9 @@ name: Steam Hour Booster - Ejecución Programada
 
 on:
   schedule:
-    # Se ejecuta CADA 6 HORAS. Puedes cambiar a '0 * * * *' para cada hora
-    # Una ejecución cada 6 horas es suficiente para acumular horas de forma estable.
+    # Se ejecuta CADA 6 HORAS. Esto es suficiente para el boost.
     - cron: '0 */6 * * *' 
-  workflow_dispatch:
+  workflow_dispatch: # Permite ejecución manual
 
 jobs:
   boost_hours:
@@ -21,13 +20,14 @@ jobs:
           node-version: '20' 
 
       - name: 3. Instalar Dependencias (npm install)
-        # Usa el mismo comando de tu Build Command de Render
         run: npm install
 
       - name: 4. Ejecutar el Steam Booster (node index.js)
-        # Usa el mismo comando de tu Start Command de Render
-        run: node index.js
+        # ⚠️ SOLUCIÓN FINAL para el error de 'undefined':
+        # Pasamos la lista de juegos como una variable de entorno de shell directamente, 
+        # junto con la ejecución del script. Esto es más robusto que la sintaxis 'env:'.
+        run: |
+          GAMES='440,570,1677740,578080,1172470,730,1422450' node index.js
         env:
-          # Estas variables usan los Secretos que crearemos en el siguiente paso
+          # Dejamos ACCOUNTS en el bloque env: ya que generalmente no da problemas.
           ACCOUNTS: ${{ secrets.STEAM_ACCOUNTS }}
-          GAMES: 730, 10, 550, 1240440, 1824220, 570, 671860, 240, 620, 578080, 1260320, 1172470, 1422450, 238960, 3241660, 1085660, 2807960

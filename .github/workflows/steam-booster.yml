@@ -1,0 +1,33 @@
+name: Steam Hour Booster - Ejecución Programada
+
+on:
+  schedule:
+    # Se ejecuta CADA 6 HORAS. Puedes cambiar a '0 * * * *' para cada hora
+    # Una ejecución cada 6 horas es suficiente para acumular horas de forma estable.
+    - cron: '0 */6 * * *' 
+  workflow_dispatch:
+
+jobs:
+  boost_hours:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout del Código
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' 
+
+      - name: 3. Instalar Dependencias (npm install)
+        # Usa el mismo comando de tu Build Command de Render
+        run: npm install
+
+      - name: 4. Ejecutar el Steam Booster (node index.js)
+        # Usa el mismo comando de tu Start Command de Render
+        run: node index.js
+        env:
+          # Estas variables usan los Secretos que crearemos en el siguiente paso
+          ACCOUNTS: ${{ secrets.STEAM_ACCOUNTS }}
+          GAMES: ${{ secrets.STEAM_GAMES }}

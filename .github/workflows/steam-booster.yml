@@ -1,9 +1,8 @@
-name: Steam Hour Booster - Ejecución Programada
+name: Steam Hour Booster - Scheduler
 
 on:
   schedule:
-    # Se ejecuta CADA 6 HORAS.
-    - cron: '0 */6 * * *' 
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -11,19 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Checkout del Código
+      - name: Checkout del código
         uses: actions/checkout@v4
 
-      - name: 2. Configurar Node.js (v20)
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' 
+          node-version: 20
 
-      - name: 3. Instalar Dependencias (npm install)
+      - name: Instalar dependencias
         run: npm install
 
-      - name: 4. Ejecutar el Steam Booster (node index.js)
-        # ⚠️ SOLUCIÓN: Pasamos la clave 'GAMES' y la clave 'ACCOUNTS' directamente al comando 'run'
-        # Esto obliga al shell a crear las variables de entorno antes de ejecutar el script.
+      - name: Exportar variables de entorno
         run: |
-          GAMES='730' ACCOUNTS='${{ secrets.STEAM_ACCOUNTS }}' node index.js
+          echo "games=${{ secrets.STEAM_GAMES }}" >> $GITHUB_ENV
+          echo "accounts=${{ secrets.STEAM_ACCOUNTS }}" >> $GITHUB_ENV
+
+      - name: Ejecutar Steam Booster
+        run: node index.js
